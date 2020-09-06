@@ -16,6 +16,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       var qrCard;
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("sw.js");
+      }
       window.onload = () => {
         qrCard = new QRCard();
         qrCard.ctx = document.querySelector("[data-card]").getContext("2d");
@@ -164,6 +167,10 @@
       <a href="https://github.com/Slender1808">Created by Jadson G. Matos</a>
     </div>
     <br />
-    <script data-ad-client="ca-pub-7540935582112706" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script
+      data-ad-client="ca-pub-7540935582112706"
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+    ></script>
   </body>
 </html>
