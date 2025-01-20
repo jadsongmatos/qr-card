@@ -3,33 +3,34 @@
   <head>
     <meta
       name="description"
-      content="Gerador de QR code NuBank. Adicione QR no seu cartão NuBank"
+      content="Gerador de cartão de visita com QR Code para contato"
     />
     <meta
       name="keywords"
-      content="qrcode,nubank,nuconta,qr-code,gerador,adesivos,cartão"
+      content="cartão de visita, qrcode, gerador, contatos"
     />
     <meta name="robots" content="index, follow" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Jadson G. Matos" />
-    <title>QR Card</title>
+    <title>Cartão de Visita</title>
 
     <style>
       :root {
-        --roxo: #8a05be;
+        --azul: #0056b3;
       }
 
       @font-face {
-        font-family: Graphik-Regular;
-        src: url("https://cdn.nubank.com.br/fonts/Graphik/variants/Graphik-Regular.woff2");
+        font-family: Arial-Regular;
+        src: url("https://fonts.gstatic.com/s/arial/v7/arial.woff2");
       }
 
       html,
       body {
         margin: 0;
-        font-family: Graphik-Regular, "Gotham SSm A", "Gotham SSm B",
-          "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        font-family: Arial-Regular, sans-serif !important;
+        background-color: #f5f5f5;
+        color: #333;
       }
 
       .c-t {
@@ -41,44 +42,41 @@
       }
 
       .my-2 {
-        margin-top: 2em;
-        margin-bottom: 2em;
+        margin-top: 1em;
+        margin-bottom: 1em;
       }
 
       button {
-        background-color: var(--roxo);
+        background-color: var(--azul);
         border: 0;
         height: 3em;
         color: #fff;
         cursor: pointer;
+        border-radius: 0.5em;
+        padding: 0 1em;
       }
 
       input {
-        padding-left: 2vw;
-        padding-top: 1vh;
-        padding-bottom: 1vh;
+        padding: 0.5em;
+        width: calc(100% - 1em);
+        margin: 0.5em 0;
+        border: 1px solid #ccc;
+        border-radius: 0.5em;
+        font-size: 1em;
       }
 
-      input::-webkit-outer-spin-button,
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-      input:focus,
-      select:focus,
-      textarea:focus,
-      button:focus {
+      input:focus {
         outline: none;
+        border-color: var(--azul);
       }
 
       canvas {
-        position: relative;
-        left: 25vw;
-        width: 50vw;
+        display: block;
+        margin: 2em auto;
+        width: 90%;
+        max-width: 500px;
         border-radius: 1em;
-        filter: drop-shadow(1vw 1vh 2vmax #555);
-        margin-bottom: 2em;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
       footer {
@@ -87,46 +85,62 @@
       }
 
       footer a {
-        color: var(--roxo);
+        color: var(--azul);
         text-decoration: none;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1 class="c-t">Gerador de QR code NuBank</h1>
-      <h4 class="c-t">Adicione QR no seu cartão NuBank</h4>
+      <h1 class="c-t">Gerador de Cartão de Visita</h1>
+      <h4 class="c-t">Crie um cartão de visita com QR Code</h4>
     </header>
 
     <main>
-      <form id="qr-form" class="c-t">
-        <input
-          type="number"
-          id="cpf"
-          data-cpf
-          class="my-2"
-          placeholder="Seu CPF"
-          required
-        />
+      <form id="card-form" class="c-t">
         <input
           type="text"
           id="name"
           class="my-2"
-          data-name
           placeholder="Seu Nome"
           required
+        />
+        <input
+          type="text"
+          id="job"
+          class="my-2"
+          placeholder="Seu Cargo"
+        />
+        <input
+          type="tel"
+          id="phone"
+          class="my-2"
+          placeholder="Seu Telefone"
+          required
+        />
+        <input
+          type="email"
+          id="email"
+          class="my-2"
+          placeholder="Seu Email"
+        />
+        <input
+          type="text"
+          id="company"
+          class="my-2"
+          placeholder="Sua Empresa"
         />
       </form>
 
       <canvas id="qr-card" data-card width="1063" height="709"></canvas>
 
-      <button type="button" id="download-btn" class="c-t b">
+      <button type="button" id="download-btn" class="c-t">
         Download
       </button>
     </main>
 
     <footer class="c-t">
-      <a href="https://github.com/Slender1808" target="_blank" rel="noopener noreferrer">
+      <a href="https://github.com/jadsongmatos" target="_blank" rel="noopener noreferrer">
         Created by Jadson G. Matos
       </a>
     </footer>
@@ -139,33 +153,44 @@
           this.ctx = this.canvas.getContext("2d");
           this.qr = new QRious({
             element: document.createElement("canvas"),
-            size: 177,
+            size: 200,
           });
-          this.cpf = "";
           this.name = "";
+          this.job = "";
+          this.phone = "";
+          this.email = "";
+          this.company = "";
         }
 
-        render(cpf, name) {
-          this.cpf = cpf || this.cpf;
+        render({ name, job, phone, email, company }) {
           this.name = name || this.name;
+          this.job = job || this.job;
+          this.phone = phone || this.phone;
+          this.email = email || this.email;
+          this.company = company || this.company;
 
           // Fundo do cartão
-          this.ctx.fillStyle = "#8a05be";
+          this.ctx.fillStyle = "#0056b3";
           this.ctx.fillRect(0, 0, 1063, 709);
 
-          // Gerar QR Code
-          this.qr.value = `nuapp://cpf/${this.cpf}`;
-          this.ctx.drawImage(this.qr.element, 645, 64, 354, 354);
-
-          // Nome
+          // Texto
           this.ctx.fillStyle = "#fff";
-          this.ctx.font = "64px Graphik-Regular";
-          this.ctx.fillText(this.name, 64, 645);
+          this.ctx.font = "32px Arial-Regular";
+          this.ctx.fillText(this.name, 50, 100);
+          this.ctx.fillText(this.job, 50, 150);
+          this.ctx.fillText(this.company, 50, 200);
+          this.ctx.fillText(this.phone, 50, 250);
+          this.ctx.fillText(this.email, 50, 300);
+
+          // QR Code
+          const vCard = `BEGIN:VCARD\nVERSION:3.0\nN:${this.name}\nORG:${this.company}\nTITLE:${this.job}\nTEL:${this.phone}\nEMAIL:${this.email}\nEND:VCARD`;
+          this.qr.value = vCard;
+          this.ctx.drawImage(this.qr.element, 800, 50, 200, 200);
         }
 
         download() {
           const link = document.createElement("a");
-          link.download = `${this.name}-QrCard.png`;
+          link.download = `${this.name}-CartaoDeVisita.png`;
           link.href = this.canvas.toDataURL("image/png");
           link.click();
         }
@@ -174,13 +199,16 @@
       document.addEventListener("DOMContentLoaded", () => {
         const qrCard = new QRCard("#qr-card");
 
-        const form = document.getElementById("qr-form");
+        const form = document.getElementById("card-form");
         const downloadBtn = document.getElementById("download-btn");
 
         form.addEventListener("input", () => {
-          const cpf = form.querySelector("[data-cpf]").value;
-          const name = form.querySelector("[data-name]").value;
-          qrCard.render(cpf, name);
+          const name = form.querySelector("#name").value;
+          const job = form.querySelector("#job").value;
+          const phone = form.querySelector("#phone").value;
+          const email = form.querySelector("#email").value;
+          const company = form.querySelector("#company").value;
+          qrCard.render({ name, job, phone, email, company });
         });
 
         downloadBtn.addEventListener("click", () => qrCard.download());
