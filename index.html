@@ -3,86 +3,35 @@
   <head>
     <meta
       name="description"
-      content="Gerador de QR code NuBank. Adicone QR no seu cartão NuBank"
+      content="Gerador de QR code NuBank. Adicione QR no seu cartão NuBank"
     />
     <meta
       name="keywords"
       content="qrcode,nubank,nuconta,qr-code,gerador,adesivos,cartão"
     />
     <meta name="robots" content="index, follow" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Jadson G. Matos" />
     <title>QR Card</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script>
-      var qrCard;
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("sw.js");
-      }
-      window.onload = () => {
-        qrCard = new QRCard();
-        qrCard.ctx = document.querySelector("[data-card]").getContext("2d");
-        qrCard.logo = document.querySelector("[data-logo='w']");
-        qrCard.render();
-      };
-      class QRCard {
-        constructor() {
-          this.ctx;
-          this.cpf;
-          this.name;
-          this.logo;
-        }
-        async render() {
-          this.cpf = document.querySelector("[data-cpf]").value;
-          this.name = document.querySelector("[data-name]").value;
-          this.ctx.globalCompositeOperation = "source-over";
-          this.ctx.fillStyle = "#8a05be";
-          this.ctx.fillRect(0, 0, 1063, 709);
-          let image = new Image();
-          image.src =
-            "https://chart.googleapis.com/chart?chs=177x177&cht=qr&choe=UTF-8&chld=H&chl=nuapp://cpf/" +
-            this.cpf;
-          image.crossOrigin = "anonymous";
-          image.onload = async () => {
-            this.ctx.globalCompositeOperation = "screen";
-            this.ctx.drawImage(image, 645, 64, 354, 354);
-            //  Logo
-            this.ctx.drawImage(this.logo, 64, 459, 124, 90);
-            // Cor
-            this.ctx.globalCompositeOperation = "color";
-            this.ctx.fillStyle = "#8a05be";
-            this.ctx.fillRect(0, 0, 1063, 709);
-            // Nome
-            this.ctx.globalCompositeOperation = "source-over";
-            this.ctx.fillStyle = "#fff";
-            this.ctx.font = "64px Graphik-Regular";
-            this.ctx.fillText(this.name, 64, 645);
-          };
-        }
-        async download() {
-          let link = document.createElement("a");
-          link.download = this.name + "-QrCard.png";
-          link.href = document
-            .querySelector("[data-card]")
-            .toDataURL("image/png", 0.1);
-          link.click();
-        }
-      }
-    </script>
+
     <style>
       :root {
         --roxo: #8a05be;
       }
+
       @font-face {
         font-family: Graphik-Regular;
         src: url("https://cdn.nubank.com.br/fonts/Graphik/variants/Graphik-Regular.woff2");
       }
+
       html,
       body {
         margin: 0;
         font-family: Graphik-Regular, "Gotham SSm A", "Gotham SSm B",
           "Helvetica Neue", Helvetica, Arial, sans-serif !important;
       }
+
       .c-t {
         position: relative;
         text-align: center;
@@ -90,10 +39,12 @@
         width: 65vw;
         border-radius: 2em;
       }
+
       .my-2 {
         margin-top: 2em;
         margin-bottom: 2em;
       }
+
       button {
         background-color: var(--roxo);
         border: 0;
@@ -101,22 +52,26 @@
         color: #fff;
         cursor: pointer;
       }
+
       input {
         padding-left: 2vw;
         padding-top: 1vh;
         padding-bottom: 1vh;
       }
+
       input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
+
       input:focus,
       select:focus,
       textarea:focus,
       button:focus {
         outline: none;
       }
+
       canvas {
         position: relative;
         left: 25vw;
@@ -125,52 +80,111 @@
         filter: drop-shadow(1vw 1vh 2vmax #555);
         margin-bottom: 2em;
       }
+
+      footer {
+        text-align: center;
+        margin-top: 2em;
+      }
+
+      footer a {
+        color: var(--roxo);
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
-    <br />
-    <h1 class="c-t" style="color: var(--roxo)">Gerador de QR code NuBank</h1>
-    <h4 class="c-t">Adicone QR no seu cartão NuBank</h4>
-    <input
-      type="number"
-      data-cpf
-      class="my-2 c-t"
-      onkeyup="qrCard.render()"
-      placeholder="Seu CPF"
-      autofocus
-    />
-    <input
-      type="text"
-      class="my-2 c-t"
-      data-name
-      onkeyup="qrCard.render()"
-      value="Seu Nome"
-    />
-    <canvas class="img" data-card width="1063" height="709"></canvas>
-    <br />
-    <button
-      type="button"
-      onclick="qrCard.download()"
-      class="c-t b"
-      aria-expanded="false"
-    >
-      Download
-    </button>
-    <br />
-    <img
-      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAABaCAQAAADQ4voeAAADhUlEQVR42u3c23GjMACFYUqgBJdAB6sOQgehg9ABdAAdQAdxB9CB3QF0AB38O7tEke0B60IeRKyjp8QeiU8XwDOIiMiqvFHQcUFmoKPig4ToWMX8qzEVE9uZaHgn9oP1c/DsFq3hCz9oPwGvsEvnP97kSzkqIyXibkInCErOzI94v9e9ydqeWDJrxlHQPvArf9e8+XjPRiMYkzGiMvg67vqvXFiSWVSbo0Z+IvODagtfMltWHHNG5cMPrA08YUnvUHmGSuMH1xwunOCq22Zkcj/AznB3ul9r3R7uTp84+YG2hDuXFJnOD/QWXFDQ0P0vl+/R6lZKQ8GbQTO1wXRPqeg2SoWwnGXFk7rSNXjBgH0a7SQeWTJsfN6gS2VxNdGluYcnCm2dicJoyUC6OtomSQ1H2yS5pp+s0jy9M+9Zcl757IxJzkbwGpP0a+yZGvFVcpZcEaulZkSlMzrFxVudsrGSS4sTrKqrfDofVqZaSWx5Vs+Yje7QZsVbP1iXK4tlJ0YKfv/DM3VqNOFqsBJb2bW+wFtkEudGT9/jOWjPtr0f8BMy+a5GhfZaLfyC56raXY2qJtutWeEXvFfjtKtRNZWnrW/4BR9YEu9uNEYmPgKcH2xURrwa/Pqq8D7AAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAAzzAreCXV4XzavAYGbHzGFRd4xHg6rnnfO8xqOdp/YLHmueeu93H0Mku9AsutLtM8l3HkCNz8gueaTfzTJycj0EgUxP5AS9Z0hps7BgQTseQorYjxL7AU4l6UneLSmV5DDHV424m3YO3lRO80nSi2wWrR2Xgk4I/K+XCkg/5H/k2k/vlJKvTpdSQ926jOhuct2NanKPYEp5jkkRD3rtxLjO8SSmZcc14q1CrR9tPe7e7aU5go+Ed+YnWAT8+XgjlSNX0G6W2fL2FeFpXarAjtDSaWyXtahuyU65ff7eUawIvtjR/lV63d839yuI3/ITaYp+8EjwiA0V/JXhEfkt/Jfj9NSbbAT8dDR5RovJp/bYomeh48PuN2RMfDmeJ6zHhEQkjKoPhuwETJpbkR4VHxNSW7wZ8v/3heVz4MoI9PPA/KXgjueuiP/JtJmq8jw3/V4TC66LYvwGu3g1okpmM6PfAlwmdafgzNTHRb4OrdZ9R0zMi09NT2v6w+Qv7Yq5qCeLwbwAAAABJRU5ErkJggg=="
-      data-logo="w"
-      hidden
-    />
-    <br />
-    <div style="text-align: center">
-      <a href="https://github.com/Slender1808">Created by Jadson G. Matos</a>
-    </div>
-    <br />
-    <script
-      data-ad-client="ca-pub-7540935582112706"
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-    ></script>
+    <header>
+      <h1 class="c-t">Gerador de QR code NuBank</h1>
+      <h4 class="c-t">Adicione QR no seu cartão NuBank</h4>
+    </header>
+
+    <main>
+      <form id="qr-form" class="c-t">
+        <input
+          type="number"
+          id="cpf"
+          data-cpf
+          class="my-2"
+          placeholder="Seu CPF"
+          required
+        />
+        <input
+          type="text"
+          id="name"
+          class="my-2"
+          data-name
+          placeholder="Seu Nome"
+          required
+        />
+      </form>
+
+      <canvas id="qr-card" data-card width="1063" height="709"></canvas>
+
+      <button type="button" id="download-btn" class="c-t b">
+        Download
+      </button>
+    </main>
+
+    <footer class="c-t">
+      <a href="https://github.com/Slender1808" target="_blank" rel="noopener noreferrer">
+        Created by Jadson G. Matos
+      </a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrious/dist/qrious.min.js"></script>
+    <script>
+      class QRCard {
+        constructor(canvasSelector) {
+          this.canvas = document.querySelector(canvasSelector);
+          this.ctx = this.canvas.getContext("2d");
+          this.qr = new QRious({
+            element: document.createElement("canvas"),
+            size: 177,
+          });
+          this.cpf = "";
+          this.name = "";
+        }
+
+        render(cpf, name) {
+          this.cpf = cpf || this.cpf;
+          this.name = name || this.name;
+
+          // Fundo do cartão
+          this.ctx.fillStyle = "#8a05be";
+          this.ctx.fillRect(0, 0, 1063, 709);
+
+          // Gerar QR Code
+          this.qr.value = `nuapp://cpf/${this.cpf}`;
+          this.ctx.drawImage(this.qr.element, 645, 64, 354, 354);
+
+          // Nome
+          this.ctx.fillStyle = "#fff";
+          this.ctx.font = "64px Graphik-Regular";
+          this.ctx.fillText(this.name, 64, 645);
+        }
+
+        download() {
+          const link = document.createElement("a");
+          link.download = `${this.name}-QrCard.png`;
+          link.href = this.canvas.toDataURL("image/png");
+          link.click();
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const qrCard = new QRCard("#qr-card");
+
+        const form = document.getElementById("qr-form");
+        const downloadBtn = document.getElementById("download-btn");
+
+        form.addEventListener("input", () => {
+          const cpf = form.querySelector("[data-cpf]").value;
+          const name = form.querySelector("[data-name]").value;
+          qrCard.render(cpf, name);
+        });
+
+        downloadBtn.addEventListener("click", () => qrCard.download());
+      });
+    </script>
   </body>
 </html>
