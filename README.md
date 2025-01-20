@@ -1,6 +1,6 @@
 # QR-Card
 
-O **QR-Card** é um projeto que evoluiu ao longo do tempo. Originalmente, sua função era gerar QR Codes personalizados que funcionavam como atalhos para o aplicativo do **NuBank**, permitindo que os usuários compartilhassem um código único que, ao ser escaneado, abria diretamente a interface de transferência no app para facilitar o envio de dinheiro, permitindo que outros clientes realizassem transferências de forma ágil e sem complicações. Na época, antes da criação do **PIX**, essa funcionalidade era extremamente útil, pois facilitava o envio de dinheiro sem a necessidade de compartilhar manualmente dados bancários.
+O **QR-Card** é um projeto que evoluiu ao longo do tempo. Originalmente, sua função era gerar QR Codes personalizados que funcionavam como atalhos para o aplicativo do **NuBank**, permitindo que os usuários compartilhassem um código único que, ao ser escaneado, abria diretamente a interface de transferência no app para facilitar o envio de dinheiro, permitindo que outros clientes realizassem transferências de forma ágil e sem complicações. Na época, antes da criação do **PIX**, essa funcionalidade era extremamente útil, pois facilitava o envio de dinheiro sem a necessidade de compartilhar manualmente dados bancários. Para entender mais sobre essa funcionalidade original, acesse [este artigo](https://web.archive.org/web/20200516102756/https://blog.nubank.com.br/como-fazer-transferencias-da-conta-nubank/).
 
 Hoje, o **QR-Card** é um gerador de cartões de visita digitais com QR Code. Ele permite que você crie um cartão elegante e personalizado contendo informações como:
 
@@ -14,23 +14,19 @@ O QR Code gerado no cartão inclui um vCard, que é um padrão amplamente utiliz
 
 ## Como usar o QR-Card
 
-1. Clone este repositório:
-   ```bash
-   git clone https://github.com/jadsongmatos/qr-card.git
-   ```
+1. Acesse diretamente o projeto pelo navegador:
+   [https://jadsongmatos.github.io/qr-card/](https://jadsongmatos.github.io/qr-card/)
 
-2. Abra o arquivo `index.html` em um navegador web.
-
-3. Preencha os campos com suas informações:
+2. Preencha os campos com suas informações:
    - Nome
    - Cargo
    - Telefone
    - Email
    - Empresa
 
-4. O QR Code será gerado automaticamente no cartão conforme você digitar.
+3. O QR Code será gerado automaticamente no cartão conforme você digitar.
 
-5. Clique no botão "Download" para salvar seu cartão de visita em formato PNG.
+4. Clique no botão "Download" para salvar seu cartão de visita em formato PNG.
 
 ## Tecnologias Utilizadas
 
